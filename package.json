@@ -1,0 +1,17 @@
+{
+  "name": ".",
+  "scripts": {
+    "dev": "bun src/index.ts --watch"
+  },
+  "dependencies": {
+    "@elysiajs/cors": "^1.0.2",
+    "@prisma/client": "5.14.0",
+    "dotenv": "^16.4.5",
+    "elysia": "^1.0.6"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.2",
+    "@types/bun": "^1.0.10",
+    "prisma": "^5.11.0"
+  }
+}

@@ -1,0 +1,40 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id      Int      @id @default(autoincrement())
+  username   String   @unique
+  password String
+  token String
+  displayName String
+}
+
+model Site {
+  site_id Int      @id @default(autoincrement())
+  site_domain_1 String @unique
+  site_domain_2 String @unique
+  site_directory String
+  site_ssl_enabled Boolean @default(false)
+  site_ssl_crt_file String
+  site_ssl_key_file String
+  site_proxy_enabled Boolean @default(false)
+  site_proxy_port Int @default(8080)
+  site_application_link Int?
+}
+
+model Application {
+  application_id Int @id @default(autoincrement())
+  application_name String
+  application_runtime String @default("bun run ./index.js")
+  application_run_dir String
+  application_enabled Boolean @default(true)
+}

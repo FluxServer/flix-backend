@@ -1,0 +1,11 @@
+{
+  "name": "flix-client",
+  "main": "src/index.js",
+  "scripts": {
+    "dev": "electron ."
+  },
+  "devDependencies": {
+    "electron": "^30.0.5",
+    "electron-builder": "^24.13.3"
+  }
+}
