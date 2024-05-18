@@ -5,6 +5,9 @@ import { Context } from "elysia";
  * @param {import("elysia").Context} context 
  */
 export const parse = async (type: any,context: Context) => {
+    if(type == "fdata") {
+        return context.request.formData();
+    }
     if(type == "raw") {
         return new URLSearchParams(await context.request.text());
     }else if(type == "json"){

@@ -1,0 +1,53 @@
+<style>
+    .form-signin {
+        max-width: 330px;
+        padding: 1rem;
+    }
+
+    .form-signin .form-floating:focus-within {
+        z-index: 2;
+    }
+
+    .form-signin input[type="url"] {
+        margin-bottom: -1px;
+        border-bottom-right-radius: 0;
+        border-bottom-left-radius: 0;
+    }
+
+    .form-signin input[type="username"] {
+        margin-bottom: -1px;
+        border-bottom-right-radius: 0;
+        border-bottom-left-radius: 0;
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+    }
+
+    .form-signin input[type="password"] {
+        margin-bottom: 10px;
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+    }
+</style>
+
+<main class="form-signin w-100 m-auto" style="padding-top: 128px;">
+    <div>
+        <h1 class="h3 mb-3 fw-normal">Sign in to Flix Client</h1>
+
+        <div class="form-floating">
+            <input type="url" class="form-control" id="urlAddress" placeholder="localhost:7100">
+            <label for="floatingInput">URL Address</label>
+        </div>
+        <div class="form-floating">
+            <input type="username" class="form-control" id="userName" placeholder="Username">
+            <label for="floatingInput">Username</label>
+        </div>
+        <div class="form-floating">
+            <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+            <label for="floatingPassword">Password</label>
+        </div>
+
+        
+        <button class="btn btn-primary w-100 py-2" onclick="function_perf_login()">Sign in</button>
+        <p class="mt-5 mb-3 text-body-secondary">&copy; Cat</p>
+    </div>
+</main>

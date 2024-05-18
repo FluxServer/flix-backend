@@ -1,0 +1,10 @@
+[package]
+name = "flix"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+acme2-eab = "0.5.5"
+base64 = "0.22.1"
+json = "0.12.4"
+tokio = { version = "1.0", features = [ "time", "fs", "macros" , "rt", "rt-multi-thread"] }

@@ -26,6 +26,8 @@ model Site {
   site_ssl_enabled Boolean @default(false)
   site_ssl_crt_file String
   site_ssl_key_file String
+  site_php_enabled Boolean @default(false)
+  site_php_version String @default("8.1")
   site_proxy_enabled Boolean @default(false)
   site_proxy_port Int @default(8080)
   site_application_link Int?
