@@ -8,7 +8,11 @@ export const run = async (context: Context, prisma: PrismaClient, eventEmitter: 
     let auth = await adminAuth(context, prisma);
 
     if(auth !== null){
-        let sites = await prisma.site.findMany();
+        let sites = auth.user_type == 0 ? await prisma.site.findMany() : await prisma.site.findMany({
+            where: {
+                site_owned_by: auth.id
+            }
+        });
         let _sites = await Promise.all(sites.map(async data => {
             let certificate = await f_rs_sslexpirydate(eventEmitter, data.site_domain_1);
             return {

@@ -30,6 +30,7 @@ export const run = async (context: Context,prisma: PrismaClient, eventEmitter: E
                 site_application_link: 0,
                 site_php_enabled: body.get("enable_php") == "on" ? true : false,
                 site_ssl_enabled: false,
+                site_owned_by: auth.id,
                 site_php_version: body.get("php"),
                 site_proxy_enabled: body.get("app_link") == "none" ? false : true,
                 site_proxy_port: parseInt(body.get("port")) || 0

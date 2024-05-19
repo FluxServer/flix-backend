@@ -17,6 +17,13 @@ export const run = async (context: Context, prisma: PrismaClient, eventEmitter: 
             }
         });
 
+        if(auth.user_type !== 0){
+            if(site?.site_owned_by !== auth.id) return {
+                status: false,
+                message: "403: Unauthorized"
+            }
+        }
+
         await prisma.site.delete({
             where: {
                 site_id: site?.site_id
