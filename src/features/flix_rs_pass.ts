@@ -26,6 +26,58 @@ export const f_rs_information = (eventEmitter: EventEmitter): Promise<any> => {
     });
 };
 
+export const f_rs_decompress = (input: String,output: String,password:String,eventEmitter: EventEmitter): Promise<any> => {
+    return new Promise((resolve, reject) => {
+        try {
+            execute_rs_runtime(
+                {
+                    action: "decompress",
+                    path: input,
+                    output: output,
+                    password: password ?? 'none'
+                },
+                eventEmitter,
+                async (_data: any) => {},
+                async function (_code:number) {
+                    if(_code == 0) {
+                        resolve(true);
+                    }else{
+                        reject(false);
+                    }
+                }
+            );
+        } catch (error) {
+            reject(error);
+        }
+    });
+};
+
+export const f_rs_compress = (input: String,output: String,password:String,eventEmitter: EventEmitter): Promise<any> => {
+    return new Promise((resolve, reject) => {
+        try {
+            execute_rs_runtime(
+                {
+                    action: "compress",
+                    path: input,
+                    output: output,
+                    password: password ?? 'none'
+                },
+                eventEmitter,
+                async (_data: any) => {},
+                async function (_code:number) {
+                    if(_code == 0) {
+                        resolve(true);
+                    }else{
+                        reject(false);
+                    }
+                }
+            );
+        } catch (error) {
+            reject(error);
+        }
+    });
+};
+
 export const f_rs_sslexpirydate = (eventEmitter: EventEmitter,domain: string) => {
     return new Promise((resolve, reject) => {
         execute_rs_runtime(
