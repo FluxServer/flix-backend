@@ -16,7 +16,6 @@ extern crate base64;
 use std::fs::File;
 use std::io::Write;
 use std::str;
-use std::time::SystemTime;
 
 const LETS_ENCRYPT_URL: &'static str = "https://acme-v02.api.letsencrypt.org/directory";
 
