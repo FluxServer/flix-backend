@@ -1,5 +1,5 @@
 {
-  "name": ".",
+  "name": "flix",
   "scripts": {
     "debug": "cargo build && FLIXRS_RUNTIME=target/debug/flix bun run dev",
     "dev": "bun src/index.ts --watch"
@@ -7,9 +7,6 @@
   "dependencies": {
     "@elysiajs/cors": "^1.0.2",
     "@prisma/client": "5.14.0",
-    "@root/csr": "^0.8.1",
-    "@root/keypairs": "^0.10.3",
-    "@root/pem": "^1.0.4",
     "@types/istextorbinary": "^2.3.4",
     "acme-http-01-webroot": "^3.0.0",
     "dotenv": "^16.4.5",
