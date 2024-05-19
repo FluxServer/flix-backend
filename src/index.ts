@@ -80,6 +80,8 @@ app.post("/v1/auth/sites/ssl-new", async (context: Context) => (await import("./
 // *Files
 app.post("/v1/auth/files/list", async (context: Context) => (await import("./routes/files/list")).run(context, prisma, eventEmitter))
 app.post("/v1/auth/files/upload", async (context: Context) => (await import("./routes/files/upload")).run(context, prisma, eventEmitter))
+app.post("/v1/auth/files/view", async (context: Context) => (await import("./routes/files/view")).run(context, prisma))
+
 
 await prisma.$connect()
 console.log("🗄️  Database was connected!")
