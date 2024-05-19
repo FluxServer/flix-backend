@@ -82,6 +82,7 @@ app.post("/v1/auth/files/list", async (context: Context) => (await import("./rou
 app.post("/v1/auth/files/upload", async (context: Context) => (await import("./routes/files/upload")).run(context, prisma, eventEmitter))
 app.post("/v1/auth/files/view", async (context: Context) => (await import("./routes/files/view")).run(context, prisma))
 app.post("/v1/auth/files/edit", async (context: Context) => (await import("./routes/files/edit")).run(context, prisma))
+app.post("/v1/auth/files/rename", async (context: Context) => (await import("./routes/files/rename")).run(context, prisma))
 app.post("/v1/auth/files/new-directory", async (context: Context) => (await import("./routes/files/new-directory")).run(context, prisma))
 // *Files[Trash]
 app.post("/v1/auth/files/trash/move", async (context: Context) => (await import("./routes/files/trash/move")).run(context, prisma))
