@@ -1,4 +1,5 @@
 # Flix Web Host Panel
+<img src="assets/icon.png" />
 
 ### Stack
 - Web framework - [ElysiaJS](https://elysiajs.com/)
