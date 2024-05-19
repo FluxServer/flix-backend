@@ -81,7 +81,12 @@ app.post("/v1/auth/sites/ssl-new", async (context: Context) => (await import("./
 app.post("/v1/auth/files/list", async (context: Context) => (await import("./routes/files/list")).run(context, prisma, eventEmitter))
 app.post("/v1/auth/files/upload", async (context: Context) => (await import("./routes/files/upload")).run(context, prisma, eventEmitter))
 app.post("/v1/auth/files/view", async (context: Context) => (await import("./routes/files/view")).run(context, prisma))
-
+app.post("/v1/auth/files/edit", async (context: Context) => (await import("./routes/files/edit")).run(context, prisma))
+app.post("/v1/auth/files/new-directory", async (context: Context) => (await import("./routes/files/new-directory")).run(context, prisma))
+// *Files[Trash]
+app.post("/v1/auth/files/trash/move", async (context: Context) => (await import("./routes/files/trash/move")).run(context, prisma))
+app.post("/v1/auth/files/trash/restore", async (context: Context) => (await import("./routes/files/trash/restore")).run(context, prisma))
+app.get("/v1/auth/files/trash/list", async (context: Context) => (await import("./routes/files/trash/list")).run(context, prisma))
 
 await prisma.$connect()
 console.log("🗄️  Database was connected!")
