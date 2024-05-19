@@ -16,6 +16,7 @@ extern crate base64;
 use std::fs::File;
 use std::io::Write;
 use std::str;
+use sevenz_rust::*;
 
 const LETS_ENCRYPT_URL: &'static str = "https://acme-v02.api.letsencrypt.org/directory";
 
@@ -37,6 +38,38 @@ async fn main() -> Result<(), Error> {
 
     if _parse_json["action"] == "verinfo" {
         print!("OK:0.1")
+    }
+
+    if _parse_json["action"] == "decompress" {
+        let zip_location = format!("{}", _parse_json["path"]);
+        let out_location = format!("{}", _parse_json["output"]);
+        let _password = format!("{}", _parse_json["password"]);
+
+        println!("Extracting {} into {}" , zip_location, out_location);
+
+        if _parse_json["password"] == "none" {
+            sevenz_rust::decompress_file(zip_location, out_location).unwrap();
+        }else {
+            println!("Backend does not supports 7z Decryption via Password");
+            std::process::exit(6);
+            //sevenz_rust::decompress_file_with_password(zip_location, out_location, Password::from(password)).expect("complete");
+        }
+
+        println!("Extracted Successfully");
+    }
+
+    if _parse_json["action"] == "compress" {
+        let zip_location = format!("{}", _parse_json["path"]);
+        let out_location = format!("{}", _parse_json["output"]);
+
+        let _password = format!("{}", _parse_json["password"]);
+
+        if _parse_json["password"] == "none" {
+            sevenz_rust::compress_to_path_encrypted(zip_location, out_location, Password::empty()).expect("compress ok");
+        }else {
+            println!("Backend does not supports 7z Encryption via Password");
+            std::process::exit(6);
+        }
     }
 
     if _parse_json["action"] == "ssl-exp-info" {

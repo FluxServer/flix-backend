@@ -8,3 +8,4 @@ acme2-eab = "0.5.5"
 base64 = "0.22.1"
 json = "0.12.4"
 tokio = { version = "1.0", features = [ "time", "fs", "macros" , "rt", "rt-multi-thread"] }
+sevenz-rust={version="0.5.0", features=["compress","aes256"]}
