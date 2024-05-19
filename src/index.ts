@@ -87,6 +87,9 @@ app.post("/v1/auth/files/new-directory", async (context: Context) => (await impo
 app.post("/v1/auth/files/trash/move", async (context: Context) => (await import("./routes/files/trash/move")).run(context, prisma))
 app.post("/v1/auth/files/trash/restore", async (context: Context) => (await import("./routes/files/trash/restore")).run(context, prisma))
 app.get("/v1/auth/files/trash/list", async (context: Context) => (await import("./routes/files/trash/list")).run(context, prisma))
+// *Files[Compression & Decompression]
+app.post("/v1/auth/files/7z/compress", async (context: Context) => (await import("./routes/files/compress")).run(context, prisma, eventEmitter))
+app.post("/v1/auth/files/7z/decompress", async (context: Context) => (await import("./routes/files/decompress")).run(context, prisma, eventEmitter))
 
 await prisma.$connect()
 console.log("🗄️  Database was connected!")
