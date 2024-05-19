@@ -1,4 +1,4 @@
-import { Application, PrismaClient } from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
 import { Context } from "elysia";
 import { adminAuth } from "../../utils/auth";
 import { parse } from "../../utils/datarequest";
