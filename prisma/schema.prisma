@@ -16,6 +16,7 @@ model User {
   password String
   token String
   displayName String
+  user_type Int @default(0) // 0 Means Administrator and 1 Means Normal User
 }
 
 model Site {
@@ -31,6 +32,7 @@ model Site {
   site_proxy_enabled Boolean @default(false)
   site_proxy_port Int @default(8080)
   site_application_link Int?
+  site_owned_by Int? @default(1) 
 }
 
 model Application {
@@ -39,4 +41,5 @@ model Application {
   application_runtime String @default("bun run ./index.js")
   application_run_dir String
   application_enabled Boolean @default(true)
+  application_owned_by Int? @default(1) 
 }
