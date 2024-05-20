@@ -6,9 +6,14 @@ import { EventEmitter } from "node:events"
 import { adminAuth } from "./utils/auth"
 import { create_site_files } from "./features/site-management"
 import { f_rs_information, f_rs_sslexpirydate } from "./features/flix_rs_pass"
+import { staticPlugin } from '@elysiajs/static'
 
 const app = new Elysia()
     .use(cors())
+    .use(staticPlugin({
+        prefix: "/v1_panel",
+        maxAge: (process.env['DEBUG'] as unknown as number) == 1 ? 0 : 1200
+    }))
 
 let sockets: any = [];
 let list: String = "";
@@ -38,16 +43,18 @@ async function forward(event: String, data: any) {
     }
 }
 
+app.get("/v1_panel" , () => Bun.file("public/index.html"))
 app.ws('/wssocket', {
     async message(ws, message: any) {
         if (message.event == "login") {
-            let auth = await adminAuth(ws.data as Context, prisma);
-
-            if (auth.status == false) {
-                ws.close();
-            } else {
+            let admin_fetch_data = await prisma.user.findFirst({
+                where: { token:  message.token }
+            })
+            if(admin_fetch_data){
                 ws.send({ event: "ready", message: "Login Sucessfully" })
                 sockets.push(ws.send);
+            }else{
+                ws.close();
             }
         }
         if(message.event == "rusinfo"){

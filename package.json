@@ -6,6 +6,7 @@
   },
   "dependencies": {
     "@elysiajs/cors": "^1.0.2",
+    "@elysiajs/static": "^1.0.3",
     "@prisma/client": "5.14.0",
     "@types/istextorbinary": "^2.3.4",
     "acme-http-01-webroot": "^3.0.0",
