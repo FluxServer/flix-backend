@@ -11,6 +11,7 @@
     "@types/istextorbinary": "^2.3.4",
     "acme-http-01-webroot": "^3.0.0",
     "dotenv": "^16.4.5",
+    "drivelist": "^12.0.2",
     "elysia": "^1.0.6",
     "istextorbinary": "^9.5.0"
   },

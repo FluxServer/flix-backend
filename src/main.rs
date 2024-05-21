@@ -8,6 +8,7 @@ use acme2_eab::DirectoryBuilder;
 use acme2_eab::Error;
 use acme2_eab::OrderBuilder;
 use acme2_eab::OrderStatus;
+use sys_metrics::disks;
 use std::env;
 use std::fs;
 use std::io::Read;
@@ -17,6 +18,10 @@ use std::fs::File;
 use std::io::Write;
 use std::str;
 use sevenz_rust::*;
+use sys_metrics::{disks::*};
+use sysinfo::{
+    Components, Disks, Networks, System,
+};
 
 const LETS_ENCRYPT_URL: &'static str = "https://acme-v02.api.letsencrypt.org/directory";
 
@@ -38,6 +43,12 @@ async fn main() -> Result<(), Error> {
 
     if _parse_json["action"] == "verinfo" {
         print!("OK:0.1")
+    }
+
+    if _parse_json["action"] == "disklist" {
+        let disks = Disks::new_with_refreshed_list();
+
+        println!("{:?}" , disks);
     }
 
     if _parse_json["action"] == "decompress" {

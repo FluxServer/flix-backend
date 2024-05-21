@@ -67,6 +67,8 @@ app.ws('/wssocket', {
 app.post("/v1/login", async (context: Context) => (await import("./routes/login")).run(context, prisma))
 app.post("/v1/register", async (context: Context) => (await import("./routes/register")).run(context, prisma))
 
+app.get("/v1/auth/sysinfo", async (context: Context) => (await import("./routes/sysinfo")).run(context, prisma, eventEmitter))
+
 // *Applications
 app.get("/v1/auth/app/list", async (context: Context) => (await import("./routes/apps/list")).run(context, prisma, eventEmitter, list))
 app.post("/v1/auth/app/new", async (context: Context) => (await import("./routes/apps/new")).run(context, prisma, eventEmitter))

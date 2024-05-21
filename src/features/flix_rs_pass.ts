@@ -3,7 +3,7 @@ import { spawn } from "node:child_process";
 import { PrismaClient } from "@prisma/client";
 import { join } from "node:path";
 
-const FLIX_RS_RUNTIME:string = process.env['FLIXRS_RUNTIME'] as string
+const FLIX_RS_RUNTIME: string = process.env['FLIXRS_RUNTIME'] as string
 
 export const f_rs_information = (eventEmitter: EventEmitter): Promise<any> => {
     return new Promise((resolve, reject) => {
@@ -16,8 +16,8 @@ export const f_rs_information = (eventEmitter: EventEmitter): Promise<any> => {
                 async (_data: any) => {
                     resolve(_data);
                 },
-                async function (_code:number) {
-                    
+                async function (_code: number) {
+
                 }
             );
         } catch (error) {
@@ -26,7 +26,49 @@ export const f_rs_information = (eventEmitter: EventEmitter): Promise<any> => {
     });
 };
 
-export const f_rs_decompress = (input: String,output: String,password:String,eventEmitter: EventEmitter): Promise<any> => {
+export const f_rs_disklist = (eventEmitter: EventEmitter): Promise<any> => {
+    return new Promise((resolve, reject) => {
+        try {
+            execute_rs_runtime(
+                {
+                    action: "disklist"
+                },
+                eventEmitter,
+                async (_data: any) => {
+                    let data: string = _data;
+
+                    const diskRegex = /Disk\("([^"]+)"\)\[FS: "([^"]+)"\]\[Type: (\w+)\]\[removable: (no|yes)\] mounted on "([^"]+)": (\d+)\/(\d+) B/g;
+                    const disks = [];
+                    let match;
+
+                    while ((match = diskRegex.exec(data)) !== null) {
+                        const [_, device, fs, type, removable, mountPoint, used, total] = match;
+                        disks.push({
+                            device,
+                            filesystem: fs,
+                            type,
+                            removable: removable === 'yes',
+                            mountPoint,
+                            used: parseInt(used, 10),
+                            total: parseInt(total, 10)
+                        });
+                    }
+
+                    resolve(disks);
+                },
+                async function (_code: number) {
+                    if (_code !== 0) {
+                        reject(_code);
+                    }
+                }
+            );
+        } catch (error) {
+            reject(error);
+        }
+    });
+};
+
+export const f_rs_decompress = (input: String, output: String, password: String, eventEmitter: EventEmitter): Promise<any> => {
     return new Promise((resolve, reject) => {
         try {
             execute_rs_runtime(
@@ -37,11 +79,11 @@ export const f_rs_decompress = (input: String,output: String,password:String,eve
                     password: password ?? 'none'
                 },
                 eventEmitter,
-                async (_data: any) => {},
-                async function (_code:number) {
-                    if(_code == 0) {
+                async (_data: any) => { },
+                async function (_code: number) {
+                    if (_code == 0) {
                         resolve(true);
-                    }else{
+                    } else {
                         reject(false);
                     }
                 }
@@ -52,7 +94,7 @@ export const f_rs_decompress = (input: String,output: String,password:String,eve
     });
 };
 
-export const f_rs_compress = (input: String,output: String,password:String,eventEmitter: EventEmitter): Promise<any> => {
+export const f_rs_compress = (input: String, output: String, password: String, eventEmitter: EventEmitter): Promise<any> => {
     return new Promise((resolve, reject) => {
         try {
             execute_rs_runtime(
@@ -63,11 +105,11 @@ export const f_rs_compress = (input: String,output: String,password:String,event
                     password: password ?? 'none'
                 },
                 eventEmitter,
-                async (_data: any) => {},
-                async function (_code:number) {
-                    if(_code == 0) {
+                async (_data: any) => { },
+                async function (_code: number) {
+                    if (_code == 0) {
                         resolve(true);
-                    }else{
+                    } else {
                         reject(false);
                     }
                 }
@@ -78,29 +120,29 @@ export const f_rs_compress = (input: String,output: String,password:String,event
     });
 };
 
-export const f_rs_sslexpirydate = (eventEmitter: EventEmitter,domain: string) => {
+export const f_rs_sslexpirydate = (eventEmitter: EventEmitter, domain: string) => {
     return new Promise((resolve, reject) => {
         execute_rs_runtime(
-            {action : "ssl-exp-info" , domain: domain},
+            { action: "ssl-exp-info", domain: domain },
             eventEmitter,
             async (_data: string) => {
-                if(_data.startsWith(">info ")){
+                if (_data.startsWith(">info ")) {
                     let date = _data.replace(">info ", "");
-    
-                    const new_date:Date = new Date(date + " GMT");
+
+                    const new_date: Date = new Date(date + " GMT");
                     const today_date = new Date();
 
                     const differenceInMilliseconds = new_date.getTime() - today_date.getTime();
                     const differenceInDays = Math.floor(differenceInMilliseconds / (1000 * 60 * 60 * 24));
 
-                    const timestamp:number = new_date.getTime();
-    
+                    const timestamp: number = new_date.getTime();
+
                     if (timestamp < Date.now()) {
                         resolve({
                             expired: false,
                             daysLeft: 0
                         })
-                    }else{
+                    } else {
                         resolve({
                             expired: false,
                             daysLeft: differenceInDays
@@ -108,22 +150,22 @@ export const f_rs_sslexpirydate = (eventEmitter: EventEmitter,domain: string) =>
                     }
                 }
             },
-            async function (_code:number) {
-                if(_code !== 0) reject(_code);
+            async function (_code: number) {
+                if (_code !== 0) reject(_code);
             }
         )
     });
 }
 
-export const f_rs_create_ssl = (eventEmitter: EventEmitter,prisma: PrismaClient ,site_id: number,domain: String,email: String): Promise<any> => {
+export const f_rs_create_ssl = (eventEmitter: EventEmitter, prisma: PrismaClient, site_id: number, domain: String, email: String): Promise<any> => {
     return new Promise((resolve, reject) => {
-        try{
+        try {
             execute_rs_runtime(
-                { action: "new_ssl" , email: email , domain: domain },
+                { action: "new_ssl", email: email, domain: domain },
                 eventEmitter,
-                async (_data: any) => {},
-                async function (_code:number) {
-                    if(_code == 0){
+                async (_data: any) => { },
+                async function (_code: number) {
+                    if (_code == 0) {
                         await prisma.site.update({
                             where: {
                                 site_id: site_id
@@ -139,41 +181,41 @@ export const f_rs_create_ssl = (eventEmitter: EventEmitter,prisma: PrismaClient 
                         await (await import("node:fs")).rmSync(`/www/flix/user_dir/sites/${domain}/.well-known/lock`)
 
                         resolve(true);
-                    }else{
+                    } else {
                         resolve(false);
                     }
                 }
             )
-        }catch(error){
+        } catch (error) {
             reject(error);
         }
     });
 }
 
-const execute_rs_runtime = (json: Object,eventEmitter: EventEmitter, callback: Function, exit: Function) => {
+const execute_rs_runtime = (json: Object, eventEmitter: EventEmitter, callback: Function, exit: Function) => {
     let json_stringify_base64 = btoa(JSON.stringify(json));
 
-    let process_spawn = spawn(FLIX_RS_RUNTIME, [json_stringify_base64],{
+    let process_spawn = spawn(FLIX_RS_RUNTIME, [json_stringify_base64], {
         stdio: ['pipe', 'pipe', 'pipe'],
     })
 
     process_spawn.stdout.on('data', (chunk) => {
-        eventEmitter.emit("flixrs-output" , chunk.toString());
+        eventEmitter.emit("flixrs-output", chunk.toString());
         callback(chunk.toString())
     });
 
     process_spawn.stderr.on('data', (chunk) => {
-        eventEmitter.emit("flixrs-output" , chunk.toString());
+        eventEmitter.emit("flixrs-output", chunk.toString());
         callback(chunk.toString());
     });
 
     process_spawn.on('close', (code) => {
-        eventEmitter.emit("flixrs-output" , `\nClosed at *${code}\n`);
+        eventEmitter.emit("flixrs-output", `\nClosed at *${code}\n`);
         callback(code?.toString());
         exit(code);
     });
 
     process_spawn.on('error', (err) => {
-        eventEmitter.emit("flixrs-output" , err.toString());
+        eventEmitter.emit("flixrs-output", err.toString());
     })
 }
