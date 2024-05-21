@@ -1,10 +1,11 @@
 # Flix Web Host Panel
-<img src="public/icons/icon.png" />
+<img src="v1_panel/icons/icon.png" />
 
 ### Stack
 - Web framework - [ElysiaJS](https://elysiajs.com/)
 - ORM - [Prisma](https://www.prisma.io/) ([SQLite](https://sqlite.org/))
 - Elysia plugins - [CORS](https://elysiajs.com/plugins/cors.html)
+- Rust (Let's encrypt, 7z Client, sysinfo)
 
 ### Uses
 - Install Flix First
@@ -15,3 +16,10 @@
 - **RAM** : 1GB Minimum
 - **Operating System** : Ubuntu 22.04.x, *Windows and *macOS
 - \* means it's limited ot there are some issues or it's not tested enough
+
+### Roadmap
+- [x] Add Storage Drives List
+- [ ] Database Management
+- [ ] Minecraft Server Management
+- [ ] Plugins
+- [ ] Proper xTerminal
