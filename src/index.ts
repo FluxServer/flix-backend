@@ -87,6 +87,12 @@ app.post("/v1/auth/sites/new", async (context: Context) => (await import("./rout
 app.post("/v1/auth/sites/delete", async (context: Context) => (await import("./routes/sites/delete")).run(context, prisma, eventEmitter))
 app.post("/v1/auth/sites/ssl-new", async (context: Context) => (await import("./routes/sites/new-ssl")).run(context, prisma, eventEmitter))
 
+// *Users
+app.get("/v1/auth/users/list", async (context: Context) => (await import("./routes/users/list")).run(context, prisma))
+app.post("/v1/auth/users/new", async (context: Context) => (await import("./routes/users/new")).run(context, prisma))
+app.post("/v1/auth/users/edit", async (context: Context) => (await import("./routes/users/edit")).run(context, prisma))
+app.post("/v1/auth/users/delete", async (context: Context) => (await import("./routes/users/delete")).run(context, prisma))
+
 // *Files
 app.post("/v1/auth/files/list", async (context: Context) => (await import("./routes/files/list")).run(context, prisma, eventEmitter))
 app.post("/v1/auth/files/upload", async (context: Context) => (await import("./routes/files/upload")).run(context, prisma, eventEmitter))
