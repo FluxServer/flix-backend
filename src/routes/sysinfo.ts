@@ -2,7 +2,7 @@ import { PrismaClient } from "@prisma/client";
 import { Context } from "elysia";
 import { adminAuth } from "../utils/auth";
 import { networkInterfaces, totalmem, freemem, cpus, platform } from 'os';
-import { f_rs_disklist } from "../features/flix_rs_pass";
+import { f_rs_components_temperature, f_rs_disklist, f_rs_swapinfo } from "../features/flix_rs_pass";
 import { EventEmitter } from "node:events"
 
 export const run = async (context: Context, prisma: PrismaClient, eventEmitter: EventEmitter) => {
@@ -21,6 +21,8 @@ export const run = async (context: Context, prisma: PrismaClient, eventEmitter: 
     if (auth !== null) {
         let interfaces = networkInterfaces();
         let disks_await:Array<Disk> = await f_rs_disklist(eventEmitter);
+        let swap_info = await f_rs_swapinfo(eventEmitter);
+        let cmp_temp = await f_rs_components_temperature(eventEmitter);
 
         var diskList:Array<Disk> = [];
 
@@ -61,8 +63,14 @@ export const run = async (context: Context, prisma: PrismaClient, eventEmitter: 
             storage: {
                 devices: diskList
             },
+            components: cmp_temp,
             processor: cpu_list[0],
             memory: {
+                swap: {
+                    total: formatBytes(swap_info.totalSwap),
+                    used: formatBytes(swap_info.usedSwap),
+                    free: formatBytes(swap_info.freeSwap)
+                },
                 total: formatBytes(totalmem()),
                 free: formatBytes(freemem()),
                 used: formatBytes(totalmem() - freemem())

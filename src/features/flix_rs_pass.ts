@@ -26,6 +26,36 @@ export const f_rs_information = (eventEmitter: EventEmitter): Promise<any> => {
     });
 };
 
+export const f_rs_swapinfo = (eventEmitter: EventEmitter): Promise<any> => {
+    return new Promise((resolve, reject) => {
+        try {
+            execute_rs_runtime(
+                {
+                    action: "swapinfo"
+                },
+                eventEmitter,
+                async (_data: string) => {
+                    let data:any = _data.split(":");
+                    let tSwap = data[0];
+                    let uSwap = data[1];
+                    let fSwap = data[2];
+
+                    resolve({
+                        totalSwap: tSwap,
+                        usedSwap: uSwap,
+                        freeSwap: fSwap
+                    })
+                },
+                async function (_code: number) {
+
+                }
+            );
+        } catch (error) {
+            reject(error);
+        }
+    });
+};
+
 export const f_rs_disklist = (eventEmitter: EventEmitter): Promise<any> => {
     return new Promise((resolve, reject) => {
         try {
@@ -55,6 +85,49 @@ export const f_rs_disklist = (eventEmitter: EventEmitter): Promise<any> => {
                     }
 
                     resolve(disks);
+                },
+                async function (_code: number) {
+                    if (_code !== 0) {
+                        reject(_code);
+                    }
+                }
+            );
+        } catch (error) {
+            reject(error);
+        }
+    });
+};
+
+export const f_rs_components_temperature = (eventEmitter: EventEmitter): Promise<any> => {
+    return new Promise((resolve, reject) => {
+        try {
+            execute_rs_runtime(
+                {
+                    action: "compinfo"
+                },
+                eventEmitter,
+                async (_data: any) => {
+                    let data: string = _data;
+
+                    const componentRegex = /(\w+ \w+(?: \w+)?): (\d+\.?\d*)°C \(max: (\d+\.?\d*)°C(?: \/ critical: (\d+\.?\d*)°C)?\)/g;
+                    const components = [];
+                    let match;
+
+                    while ((match = componentRegex.exec(data)) !== null) {
+                        const [_, name, temp, max, critical] = match;
+                        const component = {
+                            name,
+                            temperature: parseFloat(temp),
+                            criticalTemperature: 0.00,
+                            maxTemperature: parseFloat(max)
+                        };
+                        if (critical) {
+                            component.criticalTemperature = parseFloat(critical);
+                        }
+                        components.push(component);
+                    }
+
+                    resolve(components);
                 },
                 async function (_code: number) {
                     if (_code !== 0) {

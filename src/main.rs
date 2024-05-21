@@ -41,6 +41,10 @@ async fn main() -> Result<(), Error> {
 
     let _parse_json = json::parse(_decoded_string).unwrap();
 
+    let mut sys = System::new_all();
+
+    sys.refresh_all();
+
     if _parse_json["action"] == "verinfo" {
         print!("OK:0.1")
     }
@@ -49,6 +53,14 @@ async fn main() -> Result<(), Error> {
         let disks = Disks::new_with_refreshed_list();
 
         println!("{:?}" , disks);
+    }
+
+    if _parse_json["action"] == "swapinfo" {
+        println!("{}:{}:{}", sys.total_swap(), sys.used_swap(), sys.free_swap())
+    }
+
+    if _parse_json["action"] == "compinfo" {
+        println!("{:?}" , Components::new_with_refreshed_list())
     }
 
     if _parse_json["action"] == "decompress" {
