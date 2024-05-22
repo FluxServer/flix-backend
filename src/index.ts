@@ -64,6 +64,11 @@ app.ws('/wssocket', {
     }
 })
 
+app.get("/v1/_uscnt" , async (context: Context) => ({
+    status: true,
+    count: await prisma.user.count()
+}))
+
 app.post("/v1/login", async (context: Context) => (await import("./routes/login")).run(context, prisma))
 app.post("/v1/register", async (context: Context) => (await import("./routes/register")).run(context, prisma))
 
