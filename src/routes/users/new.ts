@@ -23,7 +23,8 @@ export const run = async (context: Context, prisma: PrismaClient) => {
             if(user){
                 return {
                     status: true,
-                    message: "User Creation Successfull"
+                    message: "User Creation Successfull",
+                    data: user,
                 }
             }else{
                 return {
