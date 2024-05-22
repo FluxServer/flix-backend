@@ -1,0 +1,44 @@
+<main class="d-flex flex-nowrap" style="width: 100%;">
+    <div class="d-flex flex-column p-3" style="width: 240px; height: 100%;">
+        <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+            <img src="/v1_panel/icons/icon.png" width="32" height="32" />
+            <span class="fs-4">Flix Web Panel</span>
+        </a>
+        <hr>
+        <ul class="nav nav-pills flex-column mb-auto">
+            <li>
+                <a class="nav-link text-white active" onclick='callRoute_Dashboard("/auth/dashboard")'>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="me-2" width="16" height="16" viewBox="0 -960 960 960"
+                        fill="#e8eaed">
+                        <path
+                            d="M520-600v-240h320v240H520ZM120-440v-400h320v400H120Zm400 320v-400h320v400H520Zm-400 0v-240h320v240H120Zm80-400h160v-240H200v240Zm400 320h160v-240H600v240Zm0-480h160v-80H600v80ZM200-200h160v-80H200v80Zm160-320Zm240-160Zm0 240ZM360-280Z" />
+                    </svg>
+                    Dashboard
+                </a>
+            </li>
+
+        </ul>
+        <hr>
+        <div class="dropdown">
+            <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
+                data-bs-toggle="dropdown" aria-expanded="false">
+                <img src="/v1_panel/icons/icon.png" alt="" width="32" height="32" class="rounded-circle me-2">
+                <strong id="user_name"></strong>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
+                <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#wss_login">Socket Logs</a></li>
+                <li><a class="dropdown-item" href="auth_login()">Sign out</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="supporter"></div>
+    <div style="width: 100%;height: 100%;">
+        <nav class="navbar">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">Flix Web Panel</a>
+            </div>
+        </nav>
+
+        <div id="dash_content" style="width: 100%;height: 540px; overflow: auto;"></div>
+    </div>
+</main>
