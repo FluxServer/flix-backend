@@ -10,6 +10,17 @@ export const run = async (context: Context, prisma: PrismaClient) => {
 
     if(auth){
         if(auth.user_type == 0){
+            let findSameUser = await prisma.user.count({
+                where: {
+                    username: body.get("username"),
+                }
+            });
+
+            if(findSameUser !== 0) return {
+                status: false,
+                message: "User with Same Creditnals already exist"
+            }
+
             let user = await prisma.user.create({
                 data: {
                     username: body.get("username"),
