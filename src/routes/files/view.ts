@@ -7,13 +7,11 @@ import { join } from "node:path";
 
 export const run = async (context: Context, prisma: PrismaClient) => {
     let auth = await adminAuth(context, prisma);
-    let body = await parse("auto", context);
-
     if(auth !== null){
-        let path = body.get("path");
-        const file = body.get("file");
+        let urlSearchParam = new URL(context.request.url);
+        let path:string = urlSearchParam.searchParams.get("path") as string;
 
-        return await readFileSync(join(path, file))
+        return Bun.file(join(path))
     }else{
         return {
             status: false,

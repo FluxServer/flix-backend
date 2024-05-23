@@ -96,4 +96,8 @@ function roundfunctionCall(route) {
     if(route == "/auth/apps/list") {
         fetchExcAppsList();
     }
+
+    if(route == "/auth/files/explorer") {
+        navigate($('#current_dir').val())
+    }
 }
