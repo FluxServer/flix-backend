@@ -61,8 +61,7 @@ function callRoute_Dashboard(route) {
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
-            }
-            window.location.href = "#" + route;
+            }   
             $('.overlay').hide();
             roundfunctionCall(route);
             return response.text();
@@ -88,5 +87,13 @@ function functionCall(route) {
 function roundfunctionCall(route) {
     if (route == "/auth/dashboard") {
         findSysInfo();
+    }
+
+    if(route == "/auth/sites/list") {
+        fetchList();
+    }
+
+    if(route == "/auth/apps/list") {
+        fetchExcAppsList();
     }
 }
