@@ -3,8 +3,12 @@ const fetchExcAppsList = async () => {
     let res = await sendRequest("auth/app/list");
     $('#siteLoads').hide();
     $('#exec_app_list').html('');
+    $('#app_list_site').html(` <option value="none">None (No Link)</option>`);
 
     for (app of res.data) {
+        if($('#app_list_site').length !== 0){
+            $('#app_list_site').append(`<option value="${app.application_id}">${app.application_name}</option>`);
+        }
         $('#exec_app_list').append(
             `<tr>
                 <td>${app.application_id}</td>

@@ -100,6 +100,8 @@ const fileSave = async (path) => {
         $('.overlay').hide();
         message("Files" , data.json().message);
     }
+
+    callRoute_Dashboard("/auth/files/explorer");
 }
 
 const editFile = async (fname, path) => {

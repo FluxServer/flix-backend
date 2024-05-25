@@ -95,6 +95,7 @@ function roundfunctionCall(route) {
 
     if(route == "/auth/sites/list") {
         fetchList();
+        fetchExcAppsList();
     }
 
     if(route == "/auth/apps/list") {

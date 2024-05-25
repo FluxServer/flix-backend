@@ -78,6 +78,7 @@
 .file-item {
     position: relative;
     z-index: 1;
+    height: 200px;
     -ms-flex: 0 0 auto;
     flex: 0 0 auto;
     border: 1px solid #eee;
