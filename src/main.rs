@@ -8,7 +8,6 @@ use acme2_eab::DirectoryBuilder;
 use acme2_eab::Error;
 use acme2_eab::OrderBuilder;
 use acme2_eab::OrderStatus;
-use sys_metrics::disks;
 use std::env;
 use std::fs;
 use std::io::Read;
@@ -18,7 +17,6 @@ use std::fs::File;
 use std::io::Write;
 use std::str;
 use sevenz_rust::*;
-use sys_metrics::{disks::*};
 use sysinfo::{
     Components, Disks, Networks, System,
 };

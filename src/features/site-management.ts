@@ -64,11 +64,15 @@ export const create_site_files = async (prisma: PrismaClient, eventEmitter: Even
         }
     }
 
-    let _process = await Bun.spawnSync(['systemctl' , 'reload', 'nginx']);
+    if(process.platform == "win32"){
 
-    if(_process.exitCode !== 0){
-        console.log(`🚫 Failed to Reload nginx Service`);
     }else{
-        console.log(`⟳  Successfully Reloaded nginx Service`);
+        let _process = await Bun.spawnSync(['systemctl' , 'reload', 'nginx']);
+
+        if(_process.exitCode !== 0){
+            console.log(`🚫 Failed to Reload nginx Service`);
+        }else{
+            console.log(`⟳  Successfully Reloaded nginx Service`);
+        }
     }
 }
