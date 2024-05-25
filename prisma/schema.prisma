@@ -22,7 +22,7 @@ model User {
 model Site {
   site_id Int      @id @default(autoincrement())
   site_domain_1 String @unique
-  site_domain_2 String @unique
+  site_domain_2 String
   site_directory String
   site_ssl_enabled Boolean @default(false)
   site_ssl_crt_file String
