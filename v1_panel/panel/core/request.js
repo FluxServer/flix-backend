@@ -1,4 +1,4 @@
-const sendRequest = async (endpoint = String, method = "GET", body = {}) => {
+const sendRequest = async (endpoint = String, method = "GET", body = {}, json = true) => {
     const headers = new Headers();
     headers.append("Content-Type", "application/json");
     if(localStorage.getItem("token")){
@@ -20,5 +20,6 @@ const sendRequest = async (endpoint = String, method = "GET", body = {}) => {
 
     let request = await fetch(`${config.api_url}${endpoint}`, requestOptions);
 
-    return request.json();
+    if(json == true) return request.json();
+    return request.text();
 }

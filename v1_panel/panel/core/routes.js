@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-function callRoute_Dashboard(route) {
+function callRoute_Dashboard(route, onLoad =() => {}) {
     let routePath = `/v1_panel/routes/dashboard${route === '/' ? '/auth/dashboard' : route}.html`;
     const dash_content = document.getElementById('dash_content');
 
@@ -68,6 +68,7 @@ function callRoute_Dashboard(route) {
         })
         .then(html => {
             dash_content.innerHTML = html;
+            onLoad();
         })
         .catch(error => {
             dash_content.innerHTML = '<h1>404</h1><p>Page not found</p>';
