@@ -16,20 +16,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-    - name: Run vcpkg
-      uses: lukka/run-vcpkg@v4
-      with:
-        vcpkgArguments: 'install openssl-windows:x64-windows'
-        vcpkgDirectory: '${{ github.workspace }}/vcpkg'
-
-    - name: Run vcpkg
-      uses: lukka/run-vcpkg@v4
-      with:
-        vcpkgArguments: 'integrate install'
-        vcpkgDirectory: '${{ github.workspace }}/vcpkg'
     - name: Build
-      run: cargo build --release
-
+      run: ./build-win.bat
+      
     - name: Upload Release Target
       uses: actions/upload-artifact@v4
       with:
