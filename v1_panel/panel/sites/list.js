@@ -3,9 +3,9 @@ const fetchList = async () => {
     let res = await sendRequest("auth/sites/list");
     $('#siteLoads').hide();
     show();
+    $('.overlay').hide();
 
     for (site of res.data) {
-        $('.overlay').hide();
 
         $('#sites_list').append(
             `<div class="card" style="width: 19rem; margin-left:12px;">
