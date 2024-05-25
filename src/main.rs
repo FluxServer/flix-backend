@@ -18,7 +18,7 @@ use std::io::Write;
 use std::str;
 use sevenz_rust::*;
 use sysinfo::{
-    Components, Disks, Networks, System,
+    Components, Disks, System,
 };
 
 const LETS_ENCRYPT_URL: &'static str = "https://acme-v02.api.letsencrypt.org/directory";

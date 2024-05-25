@@ -17,9 +17,13 @@
 - **Operating System** : Ubuntu 22.04.x, *Windows and *macOS
 - \* means it's limited ot there are some issues or it's not tested enough
 
+### Windows
+Check [Bulding on Windows](windows.md) for more information
+
 ### Roadmap
 - [x] Add Storage Drives List
 - [ ] Database Management
 - [ ] Minecraft Server Management
 - [ ] Plugins
+- [ ] Proper Windows Support
 - [ ] Proper xTerminal
