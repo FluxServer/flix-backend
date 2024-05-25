@@ -35,7 +35,7 @@ export const f_rs_swapinfo = (eventEmitter: EventEmitter): Promise<any> => {
                 },
                 eventEmitter,
                 async (_data: string) => {
-                    let data:any = _data.split(":");
+                    let data: any = _data.split(":");
                     let tSwap = data[0];
                     let uSwap = data[1];
                     let fSwap = data[2];
@@ -67,14 +67,14 @@ export const f_rs_disklist = (eventEmitter: EventEmitter): Promise<any> => {
                 async (_data: any) => {
                     let data: string = _data;
 
-                    const diskRegex = /Disk\("([^"]+)"\)\[FS: "([^"]+)"\]\[Type: (\w+)\]\[removable: (no|yes)\] mounted on "([^"]+)": (\d+)\/(\d+) B/g;
+                    const diskRegex = /Disk\("?([^"]*)"\)?\[FS: "([^"]+)"\]\[Type: (\w+)\]\[removable: (no|yes)\] mounted on "([^"]+)": (\d+)\/(\d+) B/g;
                     const disks = [];
                     let match;
 
                     while ((match = diskRegex.exec(data)) !== null) {
                         const [_, device, fs, type, removable, mountPoint, used, total] = match;
                         disks.push({
-                            device,
+                            device: device !== "" ? device : null, // Handle empty device name
                             filesystem: fs,
                             type,
                             removable: removable === 'yes',
