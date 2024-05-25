@@ -23,7 +23,7 @@
 For detailed instructions on building on Windows, refer to [Building on Windows](windows.md).
 
 ## Roadmap
-- [x] Storage Drives List Integration
+- [X] Storage Drives List Integration
 - [ ] Database Management
 - [ ] Minecraft Server Management
 - [ ] Plugin Integration
