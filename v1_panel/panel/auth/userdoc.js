@@ -8,5 +8,3 @@ const request_check_users = async () => {
         $('.overlay').hide();
     }
 }
-
-request_check_users();  

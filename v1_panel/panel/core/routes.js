@@ -76,6 +76,9 @@ function callRoute_Dashboard(route) {
 }
 
 function functionCall(route) {
+    if (route == "/login") {
+        request_check_users();
+    }
     if (route == "/auth/dashboard") {
         findSysInfo();
         start_logs();

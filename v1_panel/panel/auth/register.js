@@ -12,7 +12,7 @@ const register_login = async () => {
 
         localStorage.setItem("token" , data.token);
 
-        window.location.href = "#/dashboard";
+        window.location.href = "#/auth/dashboard";
     }else{
         message("Registeration Issue" , data.message)
     }
