@@ -1,6 +1,9 @@
 # Flix v0.1 Installer
 
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+    # Dependencies
+    sudo apt install libssl-dev build-essential git
+
     curl -fsSL https://bun.sh/install | bash
 
     sudo ln -s "${HOME}/.bun/bin/bun" /usr/bin
