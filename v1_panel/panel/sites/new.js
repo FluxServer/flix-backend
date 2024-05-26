@@ -4,7 +4,7 @@ const newSite = async () => {
     let resp = await sendRequest("auth/sites/new" , "POST", {
         "domain" : $('#domain_name').val(),
         "enable_php" : $('#enable_php').prop('checked') ? "on" : "off",
-        "php" : "8.1",
+        "php" : "8.3",
         "app_link" : $('#app_list_site').val(),
         "port": $('#proxy_port').val()
     })

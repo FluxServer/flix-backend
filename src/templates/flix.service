@@ -8,6 +8,7 @@ Type=simple
 Restart=always
 RestartSec=4
 User=root
+WorkingDirectory=/www/flix
 ExecStart=/usr/bin/env /usr/bin/bun run ./src/index.ts
 
 [Install]
