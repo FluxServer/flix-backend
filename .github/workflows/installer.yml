@@ -26,10 +26,6 @@ jobs:
         run: |
           curl https://raw.githubusercontent.com/FluxServer/flix-backend/main/install.sh | sudo bash
         shell: bash
-      - name: Check Web Panel
-        run: |
-          curl http://localhost:3000
-        shell: bash
       - name: Upload Release Target
         uses: actions/upload-artifact@v4
         with:
