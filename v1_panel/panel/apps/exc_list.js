@@ -35,7 +35,3 @@ const doAppAction = async (action, id) => {
         message("Applications" , res.message)
     }
 }
-
-const addApp = async () => {
-    
-}
