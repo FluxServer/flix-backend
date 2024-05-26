@@ -1,0 +1,14 @@
+[Unit]
+Description=Flix Web Panel
+After=network.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=4
+User=root
+ExecStart=/usr/bin/env /usr/bin/bun run ./src/index.ts
+
+[Install]
+WantedBy=multi-user.target
