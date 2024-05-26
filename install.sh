@@ -42,6 +42,11 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
 
     sudo ln -s ./src/templates/flix.service /etc/systemd/system
 
+    sudo systemctl enable flix
+    sudo systemctl start flix
+
+    echo "Installation Successfull of Flix."
+
 elif [[ "$OSTYPE" == "darwin"* ]]; then
     curl -fsSL https://bun.sh/install | bash
 
