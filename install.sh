@@ -2,7 +2,7 @@
 
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
     # Dependencies
-    sudo apt install libssl-dev build-essential git -y
+    sudo apt install libssl-dev build-essential git unzip -y
 
     curl -fsSL https://bun.sh/install | bash
 
