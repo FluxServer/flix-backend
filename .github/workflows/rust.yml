@@ -37,6 +37,7 @@ jobs:
             echo "$RUNNER_OS not supported"
             exit 1
           fi
+        shell: bash
       - name: Upload Release Target
         uses: actions/upload-artifact@v4
         with:
