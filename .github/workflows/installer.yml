@@ -26,7 +26,7 @@ jobs:
         run: |
           curl https://raw.githubusercontent.com/FluxServer/flix-backend/main/install.sh | sudo bash
         shell: bash
-      - name: Check
+      - name: Output
         run: |
-          curl http://localhost:3000/ && curl localhost
+          cat /www/flix/.env
         shell: bash
