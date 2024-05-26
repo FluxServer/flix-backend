@@ -58,6 +58,8 @@ export const run = async (context: Context, prisma: PrismaClient, eventEmitter: 
         return {
             status: true,
             user_info: auth,
+            platform: process.platform,
+            cwd: process.cwd(),
             network: {
                 interfaces: interfaces
             },

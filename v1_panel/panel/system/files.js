@@ -21,6 +21,8 @@ const re_navigate = (path) => {
 
     let joinPath = path;
 
+    console.log(joinPath)
+
     $('#current_dir').val(joinPath);
 
     navigate($('#current_dir').val())
@@ -37,7 +39,7 @@ const goBackFiles = () => {
 const deleteFile = async (fileName) => {
     if (confirm("Are you sure you want to delete this file?")) {
         let resp = await sendRequest("auth/files/trash/move", "POST", {
-            "path": $('#current_dir').val(),
+            "path": $('#current_dir').val().replaceAll("\\", "\\\\"),
             "object": fileName
         })
 
@@ -57,7 +59,7 @@ const renameFile = async (fileName) => {
     let promt1 = prompt("New name for this file?");
     if (promt1 !== "") {
         let resp = await sendRequest("auth/files/rename", "POST", {
-            "path": $('#current_dir').val(),
+            "path": $('#current_dir').val().replaceAll("\\", "\\\\"),
             "file": fileName,
             "newName": promt1
         })
@@ -90,22 +92,22 @@ const fileSave = async (path) => {
 
     $('.overlay').show();
 
-    let data = await fetch(`${config.api_url}auth/files/edit`, requestOptions)
+    let data = await (await fetch(`${config.api_url}auth/files/edit`, requestOptions)).json()
 
-    if(data.json().status == true){
+    if(data.status == true){
         callRoute_Dashboard("/auth/files/explorer")
         $('.overlay').hide();
-        message("Files" , data.json().message);
+        message("Files" , data.message);
     }else{
         $('.overlay').hide();
-        message("Files" , data.json().message);
+        message("Files" , data.message);
     }
 
     callRoute_Dashboard("/auth/files/explorer");
 }
 
 const editFile = async (fname, path) => {
-    let file = await sendRequest("auth/files/view?path=" + path, "GET", {}, false)
+    let file = await sendRequest("auth/files/view?path=" + path.replaceAll("\\", "\\\\"), "GET", {}, false)
     let aceModeList = null;
     aceModeList = ace.require("ace/ext/modelist");
 
@@ -113,7 +115,7 @@ const editFile = async (fname, path) => {
         var editor = ace.edit("ace_editor");
         let mode = aceModeList.getModeForPath(fname);
 
-        $('#fileSave').attr("onclick", `fileSave('${path}');`)
+        $('#fileSave').attr("onclick", `fileSave('${path.replaceAll("\\", "\\\\")}');`)
 
         editor.setTheme("ace/theme/monokai");
         editor.getSession().setValue(file);
@@ -139,7 +141,7 @@ const file_render = (file_data = {
 
     return `<div class="file-item">
     <div>
-        <a ${file_data.is_directory ? `onclick="re_navigate('${file_data.file_path}')"` : ''}>
+        <a ${file_data.is_directory ? `onclick="re_navigate('${file_data.file_path.replaceAll("\\", "\\\\")}')"` : ''}>
             <div class="card-img-top">
                 <span class="material-symbols-outlined"
                     style="font-size: 30px; text-align: center; margin-left: auto; margin-right: auto; display: block;">
@@ -154,7 +156,7 @@ const file_render = (file_data = {
             </button>
             <ul class="dropdown-menu">
                 <li><a class="dropdown-item" onclick="renameFile('${file_data.name}')">Rename</a></li>
-                ${file_data.is_directory ? `` : `<li><a class="dropdown-item" onclick="editFile('${file_data.name}','${file_data.file_path}')">Edit</a></li>`}
+                ${file_data.is_directory ? `` : `<li><a class="dropdown-item" onclick="editFile('${file_data.name}','${file_data.file_path.replaceAll("\\", "\\\\")}')">Edit</a></li>`}
                 <li><a class="dropdown-item" onclick="deleteFile('${file_data.name}')">Delete</a></li>
             </ul>
         </div>

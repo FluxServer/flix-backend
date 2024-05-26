@@ -5,6 +5,10 @@ async function findSysInfo() {
 
     $('.overlay').hide();
 
+    if(sysinfo.platform == "win32") {
+        $('#current_dir').val(sysinfo.cwd);
+    }
+
     $('#user_name').html(sysinfo.user_info.displayName);
 
     if ($('#ram_usage').length !== 0) {

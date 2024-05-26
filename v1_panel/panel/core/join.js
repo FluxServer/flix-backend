@@ -7,7 +7,11 @@ function join(/* path segments */) {
     // Split the inputs into a list of path commands.
     var parts = [];
     for (var i = 0, l = arguments.length; i < l; i++) {
-        parts = parts.concat(arguments[i].split("/"));
+        if(arguments[i].includes("\\")) {
+            parts = parts.concat(arguments[i].split("\\"));
+        }else{
+            parts = parts.concat(arguments[i].split("/"));
+        }
     }
     // Interpret the path commands to get the new resolved path.
     var newParts = [];
