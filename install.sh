@@ -29,7 +29,7 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
 
     cd flix
 
-    cargo build --release
+    cargo build
 
     bun install
 
