@@ -43,7 +43,7 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
 
     ./scripts/install-local-nginx.sh
 
-    sudo ln -s ./src/templates/flix.service /etc/systemd/system
+    sudo cp ./src/templates/flix.service /etc/systemd/system
 
     sudo systemctl enable flix
     sudo systemctl start flix
