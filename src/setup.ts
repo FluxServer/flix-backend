@@ -14,7 +14,7 @@ UNZIP_RUNTIME=/usr/bin/unzip
 # Database
 DATABASE_URL="file:${dbPath}"
 # Site Ports
-PORT=${defaultPort}
+PORT=${defaultPort || 3000}
 # Mysql Informations
 HOST=127.0.0.1
 USERNAME=
