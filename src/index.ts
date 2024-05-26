@@ -28,7 +28,10 @@ eventEmitter.on('process_management', (data) => {
     eventEmitter.emit("list-running-process");
 });
 
-eventEmitter.on('flixrs-output', (data) => forward("flix-rust", { data: data }));
+eventEmitter.on('flixrs-output', (data) => {
+    console.log(data);
+    forward("flix-rust", { data: data });
+});
 
 eventEmitter.on("running-process", async (_list: string) => {
     list = _list;
