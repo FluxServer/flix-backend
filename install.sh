@@ -47,6 +47,7 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
 
     sudo systemctl enable flix
     sudo systemctl start flix
+    sudo systemctl status flix
 
     echo "Installation Successfull of Flix."
 
