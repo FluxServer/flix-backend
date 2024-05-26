@@ -33,3 +33,5 @@ echo "Symlink Created"
 sudo rm /etc/nginx/nginx.conf
 sudo cp src/nginx.conf /etc/nginx/nginx.conf
 sudo cp src/default.nginx.conf user_dir/sites-available/default
+
+sudo adduser --system --no-create-home --shell /bin/false --group --disabled-login www

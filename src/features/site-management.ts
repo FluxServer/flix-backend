@@ -59,6 +59,18 @@ export const create_site_files = async (prisma: PrismaClient, eventEmitter: Even
     
             await Bun.write(join(wellKnown, 'lock'),`SITELOCK-${Date.now()}`, { createPath: true });
             await Bun.write(join(wellKnown, 'acme-challenge' , 'lock'),`SITELOCK-${Date.now()}`, { createPath: true });
+        
+            if(process.platform == "win32"){
+
+            }else{
+                let _process = await Bun.spawnSync(['systemctl' , 'reload', 'nginx']);
+        
+                if(_process.exitCode !== 0){
+                    console.log(`🚫 Failed to Reload nginx Service`);
+                }else{
+                    console.log(`⟳  Successfully Reloaded nginx Service`);
+                }
+            }
         }else{
             console.log(`🔒 ${site!.site_domain_1} is Locked`)
         }
