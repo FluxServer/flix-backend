@@ -15,6 +15,7 @@
 ## Requirements
 - **CPU**: AVX-compatible CPU required for MongoDB.
 - **RAM**: Minimum of 1GB.
+- **STORAGE**: Minimum of 5GB (Recommended 10GB).
 - **Operating System**: Supported on Ubuntu 22.04.x, with limited support on Windows* and macOS*.
 
 (Disclaimer: \* denotes limited support, known issues, or insufficient testing.)
