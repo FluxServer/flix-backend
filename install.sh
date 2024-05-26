@@ -2,7 +2,7 @@
 
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
     # Dependencies
-    sudo apt install libssl-dev build-essential git
+    sudo apt install libssl-dev build-essential git -y
 
     curl -fsSL https://bun.sh/install | bash
 
@@ -17,7 +17,7 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
     nvm install 20
     nvm use 20
 
-    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 
     export PATH=$PATH:"${HOME}/.cargo/bin";
 

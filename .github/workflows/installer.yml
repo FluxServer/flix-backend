@@ -1,0 +1,37 @@
+name: Installer Testing
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+
+    steps:
+      - uses: actions/checkout@v4
+      # - name: Install OpenSSL (Windows)
+      #   if: runner.os == 'Windows'
+      #   shell: powershell
+      #   run: |
+      #     echo "VCPKG_ROOT=$env:VCPKG_INSTALLATION_ROOT" | Out-File -FilePath $env:GITHUB_ENV -Append
+      #     vcpkg install openssl:x64-windows-static-md
+      - name: Build
+        run: |
+          curl https://raw.githubusercontent.com/FluxServer/flix-backend/main/install.sh | sudo bash
+        shell: bash
+      - name: Check Web Panel
+        run: |
+          curl http://localhost:3000
+        shell: bash
+      - name: Upload Release Target
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-target-${{matrix.os}}
+          path: target/release
