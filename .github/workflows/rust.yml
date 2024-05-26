@@ -2,30 +2,43 @@ name: Rust
 
 on:
   push:
-    branches: []
+    branches: [ main ]
   pull_request:
-    branches: []
+    branches: [ main ]
 
 env:
   CARGO_TERM_COLOR: always
 
 jobs:
   build:
+    runs-on: ${{ matrix.os }}
 
-    runs-on: windows-latest
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
 
     steps:
-    - uses: actions/checkout@v4
-    # - name: Install OpenSSL (Windows)
-    #   if: runner.os == 'Windows'
-    #   shell: powershell
-    #   run: |
-    #     echo "VCPKG_ROOT=$env:VCPKG_INSTALLATION_ROOT" | Out-File -FilePath $env:GITHUB_ENV -Append
-    #     vcpkg install openssl:x64-windows-static-md
-    - name: Build
-      run: ./build-win.bat
-    - name: Upload Release Target
-      uses: actions/upload-artifact@v4
-      with:
-        name: Release Target
-        path: target/release
+      - uses: actions/checkout@v4
+      # - name: Install OpenSSL (Windows)
+      #   if: runner.os == 'Windows'
+      #   shell: powershell
+      #   run: |
+      #     echo "VCPKG_ROOT=$env:VCPKG_INSTALLATION_ROOT" | Out-File -FilePath $env:GITHUB_ENV -Append
+      #     vcpkg install openssl:x64-windows-static-md
+      - name: Build
+        run: |
+          if [ "$RUNNER_OS" == "Linux" ]; then
+            cargo build --release
+          elif [ "$RUNNER_OS" == "Windows" ]; then
+            ./build-win.bat
+          elif [ "$RUNNER_OS" == "macOS" ]; then
+            cargo build --release
+          else
+            echo "$RUNNER_OS not supported"
+            exit 1
+          fi
+      - name: Upload Release Target
+        uses: actions/upload-artifact@v4
+        with:
+          name: Release Target
+          path: target/release
