@@ -10,10 +10,11 @@ export const run = async (context: Context,prisma: PrismaClient, eventEmitter: E
 
     if(auth !== null){
         let appLink:Application;
+
         if(body.get("app_link") !== "none"){
             let application = await prisma.application.findFirst({
                 where: {
-                    application_id: body.get("app_link")
+                    application_id: parseInt(body.get("app_link").toString())
                 }
             })
 
@@ -27,7 +28,7 @@ export const run = async (context: Context,prisma: PrismaClient, eventEmitter: E
                 site_directory: "",
                 site_ssl_crt_file: "",
                 site_ssl_key_file: "",
-                site_application_link: 0,
+                site_application_link: body.get("app_link") == "none" ? 0 : parseInt(body.get("app_link").toString()),
                 site_php_enabled: body.get("enable_php") == "on" ? true : false,
                 site_ssl_enabled: false,
                 site_owned_by: auth.id,
