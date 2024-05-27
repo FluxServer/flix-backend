@@ -5,6 +5,8 @@ import { join } from "node:path";
 
 const FLIX_RS_RUNTIME: string = process.env['FLIXRS_RUNTIME'] as string
 
+let disks_cache:Array<any> = [];
+
 export const f_rs_information = (eventEmitter: EventEmitter): Promise<any> => {
     return new Promise((resolve, reject) => {
         try {
@@ -59,6 +61,9 @@ export const f_rs_swapinfo = (eventEmitter: EventEmitter): Promise<any> => {
 export const f_rs_disklist = (eventEmitter: EventEmitter): Promise<any> => {
     return new Promise((resolve, reject) => {
         try {
+            if(disks_cache.length !== 0){
+                return disks_cache;
+            }
             execute_rs_runtime(
                 {
                     action: "disklist"
@@ -83,6 +88,8 @@ export const f_rs_disklist = (eventEmitter: EventEmitter): Promise<any> => {
                             total: parseInt(total, 10)
                         });
                     }
+
+                    disks_cache = disks;
 
                     resolve(disks);
                 },

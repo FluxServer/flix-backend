@@ -1,0 +1,20 @@
+<nav class="navbar bg-body-tertiary">
+    <div class="container-fluid">
+        <a class="navbar-brand">Extract File (7z)</a>
+        <div class="d-flex">
+            <button class="btn btn-primary" id="extractFile" onclick="extractProcess()">Extract</button>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="mb-3">
+        <label for="inputPath" class="form-label">Input File</label>
+        <input type="path" class="form-control" id="inputPath" placeholder="/test.7z" disabled>
+    </div>
+
+    <div class="mb-3">
+        <label for="outputPath" class="form-label">Output Path</label>
+        <input type="path" class="form-control" id="outputPath" placeholder="/test" >
+    </div>
+</div>

@@ -43,6 +43,8 @@ const deleteFile = async (fileName) => {
             "object": fileName
         })
 
+        navigate($('#current_dir').val());
+
         if (resp.status == true) {
             message("Files", resp.message);
 
@@ -76,6 +78,33 @@ const renameFile = async (fileName) => {
     }
 }
 
+const uploadFile = async () => {
+    let file = document.getElementById("fileToUpload").files[0];
+
+    const myHeaders = new Headers();
+    myHeaders.append("Authorization", `Token ${localStorage.token}`);
+
+    const formdata = new FormData();
+    formdata.append("path", $('#current_dir').val());
+    formdata.append("file", file, file.name);
+
+    const requestOptions = {
+        method: "POST",
+        headers: myHeaders,
+        body: formdata,
+        redirect: "follow"
+    };
+
+    let resp = await (await fetch(`${window.config.api_url}auth/files/upload`, requestOptions)).json();
+
+    if(resp.status == true){
+        navigate($('#current_dir').val());
+        message("Files", resp.message);
+    }else{
+        message("Files", resp.message);
+    }
+}
+
 const fileSave = async (path) => {
     const myHeaders = new Headers();
     myHeaders.append("Authorization", `Token ${localStorage.token}`);
@@ -94,16 +123,42 @@ const fileSave = async (path) => {
 
     let data = await (await fetch(`${config.api_url}auth/files/edit`, requestOptions)).json()
 
-    if(data.status == true){
+    if (data.status == true) {
         callRoute_Dashboard("/auth/files/explorer")
         $('.overlay').hide();
-        message("Files" , data.message);
-    }else{
+        message("Files", data.message);
+    } else {
         $('.overlay').hide();
-        message("Files" , data.message);
+        message("Files", data.message);
     }
 
     callRoute_Dashboard("/auth/files/explorer");
+}
+
+const extractFile = async (path) => {
+    callRoute_Dashboard("/auth/files/extract", async () => {
+        $('#inputPath').val(path);
+        $('#outputPath').val($('#current_dir').val());
+    });
+}
+
+const extractProcess = async () => {
+    $('#extractFile').attr('disabled' , "");
+
+    let resp = await sendRequest("auth/files/7z/decompress" , "POST" , {
+        "input" : $('#inputPath').val(),
+        "output" : $('#outputPath').val(),
+        "password" : "none"
+    })
+
+    if(resp.status == true){
+        message("7z" , resp.message);
+        callRoute_Dashboard("/auth/files/explorer")
+        navigate($('#current_dir').val())
+    }else{
+        $('#extractFile').removeAttr('disabled');
+        message("7z" , resp.message);
+    }
 }
 
 const editFile = async (fname, path) => {
@@ -156,6 +211,7 @@ const file_render = (file_data = {
             </button>
             <ul class="dropdown-menu">
                 <li><a class="dropdown-item" onclick="renameFile('${file_data.name}')">Rename</a></li>
+                ${file_data.is_directory ? `` : `<li><a class="dropdown-item" onclick="extractFile('${file_data.file_path.replaceAll("\\", "\\\\")}')">Extract (7z)</a></li>`}
                 ${file_data.is_directory ? `` : `<li><a class="dropdown-item" onclick="editFile('${file_data.name}','${file_data.file_path.replaceAll("\\", "\\\\")}')">Edit</a></li>`}
                 <li><a class="dropdown-item" onclick="deleteFile('${file_data.name}')">Delete</a></li>
             </ul>
