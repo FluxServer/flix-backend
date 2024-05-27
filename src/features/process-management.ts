@@ -102,7 +102,10 @@ export const start_process_management = async (prisma: PrismaClient, eventEmitte
 
                 eventEmitter.on("stop-process" , (id) => {
                     if(id == application!.application_id){
+                        console.log(id, application!.application_id);
+                        process.kill(proc.pid as number , 'SIGTERM');
                         proc.kill();
+                        
                         eventEmitter.emit('process_management', {
                             method: "stop",
                             process: application!.application_id
