@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter_client/mainfold/dashboard.dart';
+import 'package:flutter_client/utils/request.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../utils/responsive.dart';
@@ -15,9 +16,14 @@ class _ServerSelectionPageState extends State<ServerSelectionPage> {
   List<Map> servers = [];
   late SharedPreferences prefs;
   bool isLoading = false;
+  bool isButtonLoading = false;
 
   TextEditingController serverName = TextEditingController();
   TextEditingController serverAPI = TextEditingController();
+
+  TextEditingController userName = TextEditingController();
+  TextEditingController userPassword = TextEditingController();
+  TextEditingController displayName = TextEditingController();
 
   @override
   void initState() {
@@ -30,6 +36,7 @@ class _ServerSelectionPageState extends State<ServerSelectionPage> {
     setState(() {
       prefs = pref;
     });
+    fetchServers();
   }
 
   void fetchServers () async {
@@ -60,10 +67,104 @@ class _ServerSelectionPageState extends State<ServerSelectionPage> {
     );
   }
 
-  void setServer(String id){
+  void setServer(String id) async {
     setState(() {
       isLoading = true;
     });
+
+    prefs.setString("currentServer", id);
+
+    Map<String, dynamic> data = await makeRequest(
+        prefs: prefs,
+        method: "GET",
+        data: {},
+        endpoint: "v1/_uscnt"
+    );
+
+
+    setState(() {
+      isLoading = false;
+    });
+
+    if(data['status'] == true){
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Server Ping Sucessfully done."),behavior: SnackBarBehavior.floating,width: 280,)
+      );
+
+      if(data['count'] == 0) {
+
+      }else {
+        showDialog(context: context, builder: (ctx) => AlertDialog(
+          title: const Text("Login to your Flix Server"),
+          content: SizedBox(
+            height: 200,
+            width: isMobile(context) ? MediaQuery.of(context).size.width - 200 : 300,
+            child: Column(
+              children: [
+                TextFormField(
+                  controller: userName,
+                  decoration: const InputDecoration(
+                    labelText: "Username"
+                  ),
+                ),
+                TextFormField(
+                  controller: userPassword,
+                  decoration: const InputDecoration(
+                      labelText: "Password"
+                  ),
+                ),
+              ],
+            ),
+          ),
+          actions: [
+            TextButton(onPressed: () => Navigator.of(context).pop(), child: const Text("Cancel")),
+            FilledButton(onPressed: () async {
+              setState(() {
+                isButtonLoading = true;
+              });
+
+              Map<String, dynamic> data = await makeRequest(
+                  prefs: prefs,
+                  method: "POST",
+                  data: {
+                    'username' : userName.value.text,
+                    'password': userPassword.value.text
+                  },
+                  endpoint: "v1/login"
+              );
+
+              setState(() {
+                isButtonLoading = false;
+              });
+
+              if(data['status'] == true){
+                Navigator.of(context).pop();
+                prefs.setString("login_token", data['token']);
+                prefs.setString("login_displayName", data['displayName']);
+                Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(
+                        builder: (ctx) => const DashboardPage()
+                    )
+                );
+                ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text(data['message']),behavior: SnackBarBehavior.floating,width: 280,)
+                );
+              }else{
+                Navigator.of(context).pop();
+                ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text(data['message']),behavior: SnackBarBehavior.floating,width: 280,)
+                );
+              }
+            }, child: Text(isButtonLoading ? "Logging in" : "Login"))
+          ],
+        ));
+      }
+
+    }else{
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Something went wrong"),behavior: SnackBarBehavior.floating,width: 280,)
+      );
+    }
   }
 
   void newServer() {
@@ -146,7 +247,7 @@ class _ServerSelectionPageState extends State<ServerSelectionPage> {
         children: [
           Center(
             child: SizedBox(
-              width: MediaQuery.of(context).size.width - 380,
+              width: 800,
               height: MediaQuery.of(context).size.height - 320,
               child: Card(
                 child: SingleChildScrollView(
