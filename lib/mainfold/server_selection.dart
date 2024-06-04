@@ -44,10 +44,12 @@ class _ServerSelectionPageState extends State<ServerSelectionPage> {
     List<Map> tempMapBuild = [];
 
     for(var key in keys) {
-      tempMapBuild.add({
-        'name': key.replaceFirst("!server:", ""),
-        'api' : prefs.get(key),
-      });
+      if(key.startsWith("!server:")) {
+        tempMapBuild.add({
+          'name': key.replaceFirst("!server:", ""),
+          'api': prefs.get(key),
+        });
+      }
     }
 
     setState(() {
@@ -73,6 +75,16 @@ class _ServerSelectionPageState extends State<ServerSelectionPage> {
     });
 
     prefs.setString("currentServer", id);
+
+    if(prefs.containsKey("login_token")){
+      Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+              builder: (ctx) => const DashboardPage()
+          )
+      );
+
+      return;
+    }
 
     Map<String, dynamic> data = await makeRequest(
         prefs: prefs,

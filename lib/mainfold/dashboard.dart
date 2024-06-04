@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_client/routes/dashboard.dart';
 import 'package:flutter_client/routes/users.dart';
 
+import '../routes/websites.dart';
 import '../utils/responsive.dart';
 
 class DashboardPage extends StatefulWidget {
@@ -27,11 +28,17 @@ class _DashboardPageState extends State<DashboardPage> {
       children: [
         Padding(
           padding: const EdgeInsets.fromLTRB(28, 16, 16, 10),
-          child: Text(
-            'Flix WebPanel',
-            style: Theme.of(context).textTheme.titleSmall,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Image.asset("assets/icon.png", width: 45,height: 45,),
+              const Text("Flix Web Host",style: TextStyle(
+                fontSize: 20
+              ),)
+            ],
           ),
         ),
+        const Divider(),
         const NavigationDrawerDestination(
           label: Text("Dashboard"),
           icon: Icon(Icons.dashboard),
@@ -41,6 +48,11 @@ class _DashboardPageState extends State<DashboardPage> {
           label: Text("User Accounts"),
           icon: Icon(Icons.person),
           selectedIcon: Icon(Icons.person_outline),
+        ),
+        const NavigationDrawerDestination(
+          label: Text("Websites"),
+          icon: Icon(Icons.web),
+          selectedIcon: Icon(Icons.web_outlined),
         ),
       ],
     );
@@ -58,6 +70,10 @@ class _DashboardPageState extends State<DashboardPage> {
 
     if(currentIndex == 1) {
       return UserPage(callback: (double index) => subMethods(index));
+    }
+
+    if(currentIndex == 2) {
+      return WebPage(callback: (double index) => subMethods(index));
     }
 
     return const Center(

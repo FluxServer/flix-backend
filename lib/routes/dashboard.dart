@@ -56,6 +56,8 @@ class _DashPageState extends State<DashPage> {
         endpoint: "v1/auth/sysinfo"
     );
 
+    if(!context.mounted) return;
+
     setState(() {
       isLoading = false;
     });

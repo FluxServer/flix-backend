@@ -119,6 +119,8 @@ class _UserPageState extends State<UserPage> {
         endpoint: "v1/auth/users/list"
     );
 
+    if(!context.mounted) return;
+
     setState(() {
       isLoading = false;
     });
@@ -191,11 +193,11 @@ class _UserPageState extends State<UserPage> {
               method: "POST",
               data: {
                 "id" : id,
-                "username" : userName.value.text,
-                "displayName" : userDisplayName.value.text,
-                "password": userPassword.value.text
+                "username" : eUserName.value.text,
+                "displayName" : eUserDisplayName.value.text,
+                "password": eUserPassword.value.text
               },
-              endpoint: "v1/auth/users/new"
+              endpoint: "v1/auth/users/edit"
           );
 
           setState(() {

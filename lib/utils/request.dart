@@ -9,24 +9,33 @@ Future<Map<String, dynamic>> makeRequest({
   required Map data,
   required String endpoint
 }) async {
-  String? apiUri = prefs.getString("!server:${prefs.getString("currentServer")}");
-  var headers = prefs.containsKey("login_token") ? {
-    'Authorization': 'Token ${prefs.getString("login_token")}'
-  } : {
-    'Content-Type': 'application/json'
-  };
-  var request = http.Request(method, Uri.parse('$apiUri$endpoint'));
-  request.headers.addAll(headers);
+  try {
+    String? apiUri = prefs.getString(
+        "!server:${prefs.getString("currentServer")}");
+    var headers = prefs.containsKey("login_token") ? {
+      'Authorization': 'Token ${prefs.getString("login_token")}'
+    } : {
+      'Content-Type': 'application/json'
+    };
+    var request = http.Request(method, Uri.parse('$apiUri$endpoint'));
+    request.headers.addAll(headers);
 
-  if(method == "POST") request.body = json.encode(data);
+    if (method == "POST") request.body = json.encode(data);
 
-  http.StreamedResponse response = await request.send();
+    http.StreamedResponse response = await request.send();
 
-  if (response.statusCode == 200) {
-    Map<String, dynamic> data = jsonDecode(await response.stream.bytesToString());
+    if (response.statusCode == 200) {
+      Map<String, dynamic> data = jsonDecode(
+          await response.stream.bytesToString());
 
-    return data;
-  }else{
+      return data;
+    } else {
+      return {
+        'status': false,
+        'message': "Something Went Wrong"
+      };
+    }
+  }catch(e){
     return {
       'status': false,
       'message': "Something Went Wrong"
