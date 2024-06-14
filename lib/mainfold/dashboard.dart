@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_client/routes/applications.dart';
 import 'package:flutter_client/routes/dashboard.dart';
 import 'package:flutter_client/routes/users.dart';
+import 'package:flutter_client/routes/xterm.dart';
 
 import '../routes/websites.dart';
 import '../utils/responsive.dart';
@@ -60,6 +61,11 @@ class _DashboardPageState extends State<DashboardPage> {
           icon: Icon(Icons.apps),
           selectedIcon: Icon(Icons.apps_outlined),
         ),
+        const NavigationDrawerDestination(
+          label: Text("Terminal"),
+          icon: Icon(Icons.terminal),
+          selectedIcon: Icon(Icons.terminal_outlined),
+        ),
       ],
     );
   }
@@ -84,6 +90,10 @@ class _DashboardPageState extends State<DashboardPage> {
 
     if(currentIndex == 3) {
       return AppsPage(callback: (double index) => subMethods(index));
+    }
+
+    if(currentIndex == 4) {
+      return const XtermPage(host: 'auto', username: 'auto', password: 'auto', port: 22,);
     }
 
     return const Center(

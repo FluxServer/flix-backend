@@ -42,6 +42,8 @@ dependencies:
   font_awesome_flutter: ^10.7.0
   flutter_highlight: ^0.7.0
   highlight: ^0.7.0
+  xterm: ^4.0.0
+  dartssh2: ^2.8.2
 
 dev_dependencies:
   flutter_test:
