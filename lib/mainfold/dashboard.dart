@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_client/routes/applications.dart';
 import 'package:flutter_client/routes/dashboard.dart';
 import 'package:flutter_client/routes/users.dart';
 
@@ -54,6 +55,11 @@ class _DashboardPageState extends State<DashboardPage> {
           icon: Icon(Icons.web),
           selectedIcon: Icon(Icons.web_outlined),
         ),
+        const NavigationDrawerDestination(
+          label: Text("Applications"),
+          icon: Icon(Icons.apps),
+          selectedIcon: Icon(Icons.apps_outlined),
+        ),
       ],
     );
   }
@@ -74,6 +80,10 @@ class _DashboardPageState extends State<DashboardPage> {
 
     if(currentIndex == 2) {
       return WebPage(callback: (double index) => subMethods(index));
+    }
+
+    if(currentIndex == 3) {
+      return AppsPage(callback: (double index) => subMethods(index));
     }
 
     return const Center(

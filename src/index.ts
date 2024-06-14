@@ -91,6 +91,7 @@ app.post("/v1/auth/services/stop", async (context: Context) => (await import("./
 
 // *Websites
 app.get("/v1/auth/sites/list", async (context: Context) => (await import("./routes/sites/list")).run(context, prisma, eventEmitter))
+app.post("/v1/auth/sites/config", async (context: Context) => (await import("./routes/sites/config")).run(context, prisma, eventEmitter))
 app.post("/v1/auth/sites/new", async (context: Context) => (await import("./routes/sites/new")).run(context, prisma, eventEmitter))
 app.post("/v1/auth/sites/delete", async (context: Context) => (await import("./routes/sites/delete")).run(context, prisma, eventEmitter))
 app.post("/v1/auth/sites/ssl-new", async (context: Context) => (await import("./routes/sites/new-ssl")).run(context, prisma, eventEmitter))
@@ -108,10 +109,12 @@ app.get("/v1/auth/files/view", async (context: Context) => (await import("./rout
 app.post("/v1/auth/files/edit", async (context: Context) => (await import("./routes/files/edit")).run(context, prisma))
 app.post("/v1/auth/files/rename", async (context: Context) => (await import("./routes/files/rename")).run(context, prisma))
 app.post("/v1/auth/files/new-directory", async (context: Context) => (await import("./routes/files/new-directory")).run(context, prisma))
+
 // *Files[Trash]
 app.post("/v1/auth/files/trash/move", async (context: Context) => (await import("./routes/files/trash/move")).run(context, prisma))
 app.post("/v1/auth/files/trash/restore", async (context: Context) => (await import("./routes/files/trash/restore")).run(context, prisma))
 app.get("/v1/auth/files/trash/list", async (context: Context) => (await import("./routes/files/trash/list")).run(context, prisma))
+
 // *Files[Compression & Decompression]
 app.post("/v1/auth/files/7z/compress", async (context: Context) => (await import("./routes/files/compress")).run(context, prisma, eventEmitter))
 app.post("/v1/auth/files/7z/decompress", async (context: Context) => (await import("./routes/files/decompress")).run(context, prisma, eventEmitter))

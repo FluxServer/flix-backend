@@ -27,6 +27,7 @@ model Site {
   site_ssl_enabled Boolean @default(false)
   site_ssl_crt_file String
   site_ssl_key_file String
+  site_config String? @default("")
   site_php_enabled Boolean @default(false)
   site_php_version String @default("8.3")
   site_proxy_enabled Boolean @default(false)

@@ -1,5 +1,6 @@
 import 'dart:convert';
-
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -30,12 +31,15 @@ Future<Map<String, dynamic>> makeRequest({
 
       return data;
     } else {
+     // Get.defaultDialog(title: "Something Went Wrong", content: Text(await response.stream.bytesToString()));
       return {
         'status': false,
-        'message': "Something Went Wrong"
+        'message': await response.stream.bytesToString()
       };
     }
   }catch(e){
+    print(e);
+   // Get.defaultDialog(title: "Something Went Wrong", content: Text(e.toString()));
     return {
       'status': false,
       'message': "Something Went Wrong"

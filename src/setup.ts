@@ -10,6 +10,7 @@ let defaultPort = prompt("Flix Listening Port? (Default: 3000) : " , "3000")
 let envRAW = `EMAIL=${email ?? 'preknolwedge@gmail.com'}
 # Runtimes
 FLIXRS_RUNTIME=${flix_rs_runtime}
+PHP_VERSION=8.2
 UNZIP_RUNTIME=/usr/bin/unzip
 # Database
 DATABASE_URL="file:${dbPath}"

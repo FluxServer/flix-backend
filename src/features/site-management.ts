@@ -17,6 +17,24 @@ export const create_site_files = async (prisma: PrismaClient, eventEmitter: Even
         await Bun.spawnSync(['systemctl' , 'reload', 'nginx']);
     });
 
+    eventEmitter.on("reload" , async (id: number) => {
+        let site = await prisma.site.findFirst({
+            where: {
+                site_id: id
+            }
+        });
+
+        let wellKnown = join(process.cwd(), 'user_dir', 'sites', site!.site_domain_1, '.well-known');
+
+        if(fs.existsSync(join(wellKnown, 'lock'))){
+            await fs.rmSync(join(wellKnown, 'lock'));
+        }
+
+        siteCreateFile(id);
+
+        await Bun.spawnSync(['systemctl' , 'reload', 'nginx']);
+    })
+
     async function siteCreateFile(id:number) {
         let site = await prisma.site.findFirst({
             where: {
@@ -37,6 +55,7 @@ export const create_site_files = async (prisma: PrismaClient, eventEmitter: Even
                 site_proxy_enabled: site!.site_proxy_enabled,
                 site_proxy_port: site!.site_proxy_port,
                 site_php_enabled: site!.site_php_enabled,
+                site_config: site?.site_config as String,
                 site_php_version: site!.site_php_version,
                 site_ssl_crt_file: site!.site_ssl_crt_file,
                 site_ssl_key_file: site!.site_ssl_key_file

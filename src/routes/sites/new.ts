@@ -21,6 +21,15 @@ export const run = async (context: Context,prisma: PrismaClient, eventEmitter: E
             appLink = application!;
         }
 
+        if(body.get("enable_php") == "on"){
+            if(body.get("php").toString() !== process.env['PHP_VERSION']?.toString()){
+                return {
+                    status: false,
+                    message: "PHP Version Not Supported/Installed in the specificed server."
+                }
+            }
+        }
+
         let site = await prisma.site.create({
             data: {
                 site_domain_1: body.get("domain"),

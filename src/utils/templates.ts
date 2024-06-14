@@ -7,6 +7,7 @@ export const template = async (template: string, snip: string, site: {
     site_proxy_port: number
     site_php_enabled: Boolean,
     site_php_version: String,
+    site_config: String,
     site_ssl_crt_file: String
     site_ssl_key_file: String
 }) => {
@@ -14,7 +15,7 @@ export const template = async (template: string, snip: string, site: {
   let file = await Bun.file(path).text();
 
   file = file.replaceAll("{domain_name}", site.site_domain as string);
-  file = file.replaceAll("{config}", "");
+  file = file.replaceAll("{config}", site?.site_config as string ?? '');
   file = file.replaceAll("{enable_ssl}", site.site_ssl_enabled ? "" : "#");
   file = file.replaceAll("{certfile}", site.site_ssl_crt_file as string);
   file = file.replaceAll("{certkey}", site.site_ssl_key_file as string);
