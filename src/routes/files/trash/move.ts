@@ -12,7 +12,7 @@ export const run = async (context: Context, prisma: PrismaClient) => {
     if(auth !== null){
         let path = body.get("path");
         const object:string = body.get("object");
-        let j_path = join(path, object);
+        let j_path = join(path);
 
         if(object.startsWith(".trash-")){
             await rmSync(join(path, object));
