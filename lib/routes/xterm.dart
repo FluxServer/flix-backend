@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:dartssh2/dartssh2.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:xterm/xterm.dart';
 
@@ -246,13 +245,12 @@ class _MyHomePageState extends State<XtermPage> {
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoPageScaffold(
-      navigationBar: CupertinoNavigationBar(
-        middle: Text(title),
-        backgroundColor:
-        CupertinoTheme.of(context).barBackgroundColor.withOpacity(0.5),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(title),
+        centerTitle: true,
       ),
-      child: Column(
+      body: Column(
         children: [
           Expanded(
             child: TerminalView(terminal),

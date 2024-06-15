@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_client/routes/applications.dart';
 import 'package:flutter_client/routes/dashboard.dart';
+import 'package:flutter_client/routes/files.dart';
 import 'package:flutter_client/routes/users.dart';
 import 'package:flutter_client/routes/xterm.dart';
 
@@ -62,6 +63,11 @@ class _DashboardPageState extends State<DashboardPage> {
           selectedIcon: Icon(Icons.apps_outlined),
         ),
         const NavigationDrawerDestination(
+          label: Text("Files"),
+          icon: Icon(Icons.folder_copy),
+          selectedIcon: Icon(Icons.folder_copy_outlined),
+        ),
+        const NavigationDrawerDestination(
           label: Text("Terminal"),
           icon: Icon(Icons.terminal),
           selectedIcon: Icon(Icons.terminal_outlined),
@@ -93,6 +99,10 @@ class _DashboardPageState extends State<DashboardPage> {
     }
 
     if(currentIndex == 4) {
+      return FilesPage(callback: (double index) => subMethods(index));
+    }
+
+    if(currentIndex == 5) {
       return const XtermPage(host: 'auto', username: 'auto', password: 'auto', port: 22,);
     }
 

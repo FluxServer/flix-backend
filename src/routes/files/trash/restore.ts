@@ -22,7 +22,7 @@ export const run = async (context: Context, prisma: PrismaClient) => {
         rmSync(trashInfo);
 
         return {
-            status: false,
+            status: true,
             message: `File ${trashJsonInfo.oldName} restored successfully!`
         }
     }else{
