@@ -5,6 +5,7 @@ import * as fs from "node:fs";
 import { spawn } from "node:child_process";
 import { config as loadEnv } from "dotenv";
 import { EventEmitter } from "node:events"
+import { existsSync } from "node:fs"
 
 export const start_process_management = async (prisma: PrismaClient, eventEmitter: EventEmitter) => {
     let runningProcess = "";
@@ -34,6 +35,9 @@ export const start_process_management = async (prisma: PrismaClient, eventEmitte
             if(application!.application_enabled == true) start_process();
 
             async function start_process() {
+                if(!existsSync(application!.application_run_dir)){
+                    return;
+                }
                 // Load environment variables from the application's .env file
                 const envFilePath = join(application!.application_run_dir, '.env');
                 let envVars: any = {};
@@ -55,7 +59,7 @@ export const start_process_management = async (prisma: PrismaClient, eventEmitte
                 const error_fileStream = fs.createWriteStream(error_filePath, { flags: 'a' });
 
                 // Spawn the shell process to run the application command
-                const proc = spawn('sh', [], {
+                const proc = spawn('/bin/sh', [], {
                     cwd: application!.application_run_dir,
                     stdio: ['pipe', 'pipe', 'pipe'],
                     env: {
