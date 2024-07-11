@@ -14,6 +14,8 @@ PHP_VERSION=8.2
 UNZIP_RUNTIME=/usr/bin/unzip
 # Database
 DATABASE_URL="file:${dbPath}"
+# Docker Configuration
+DOCKER_CONF={"socketPath": "/var/run/docker.sock"}
 # Site Ports
 PORT=${defaultPort || 3000}
 # Mysql Informations

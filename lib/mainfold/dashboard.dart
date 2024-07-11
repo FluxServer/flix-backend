@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_client/routes/applications.dart';
 import 'package:flutter_client/routes/dashboard.dart';
+import 'package:flutter_client/routes/docker.dart';
 import 'package:flutter_client/routes/files.dart';
 import 'package:flutter_client/routes/users.dart';
 import 'package:flutter_client/routes/xterm.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../routes/websites.dart';
 import '../utils/responsive.dart';
@@ -72,6 +74,11 @@ class _DashboardPageState extends State<DashboardPage> {
           icon: Icon(Icons.terminal),
           selectedIcon: Icon(Icons.terminal_outlined),
         ),
+        const NavigationDrawerDestination(
+          label: Text("Docker"),
+          icon: FaIcon(FontAwesomeIcons.docker),
+          selectedIcon: FaIcon(FontAwesomeIcons.docker),
+        ),
       ],
     );
   }
@@ -104,6 +111,10 @@ class _DashboardPageState extends State<DashboardPage> {
 
     if(currentIndex == 5) {
       return const XtermPage(host: 'auto', username: 'auto', password: 'auto', port: 22,);
+    }
+
+    if(currentIndex == 6) {
+      return DockerPage(callback: (double index) => subMethods(index));
     }
 
     return const Center(

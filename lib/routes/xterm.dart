@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:dartssh2/dartssh2.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:xterm/xterm.dart';
 
@@ -114,6 +115,11 @@ class _MyHomePageState extends State<XtermPage> {
   final TextEditingController _passwordController = TextEditingController();
 
   Future<void> initTerminal() async {
+
+    if(kIsWeb) {
+      terminal.write('dartssh2 does not supports web client \r\n');
+      return;
+    }
 
     terminal.write('Connecting...\r\n');
     late SSHClient client;
