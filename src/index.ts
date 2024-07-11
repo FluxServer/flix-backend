@@ -119,6 +119,12 @@ app.get("/v1/auth/files/trash/list", async (context: Context) => (await import("
 app.post("/v1/auth/files/7z/compress", async (context: Context) => (await import("./routes/files/compress")).run(context, prisma, eventEmitter))
 app.post("/v1/auth/files/7z/decompress", async (context: Context) => (await import("./routes/files/decompress")).run(context, prisma, eventEmitter))
 
+// *Docker
+app.get("/v1/auth/docker/containers/list", async (context: Context) => (await import("./routes/docker/listc")).run(context, prisma))
+app.get("/v1/auth/docker/images/list", async (context: Context) => (await import("./routes/docker/images/listi")).run(context, prisma))
+
+app.post("/v1/auth/docker/containers/action", async (context: Context) => (await import("./routes/docker/start-stop")).run(context, prisma))
+
 await prisma.$connect()
 console.log("🗄️  Database was connected!")
 

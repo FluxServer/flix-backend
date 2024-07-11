@@ -9,7 +9,9 @@ export const run = async (context: Context,prisma: PrismaClient) => {
         let isNginxRunning = (await Bun.spawnSync(['systemctl', 'is-active' , 'nginx'])).stdout.toString().trim()
         let isMongoDRunning = (await Bun.spawnSync(['systemctl', 'is-active' , 'mongod'])).stdout.toString().trim()
         let isMysqlRunning = (await Bun.spawnSync(['systemctl', 'is-active' , 'mysql'])).stdout.toString().trim()
-        let isiPHP81Running = (await Bun.spawnSync(['systemctl', 'is-active' , 'php8.3-fpm'])).stdout.toString().trim()
+        let isDockerRunning = (await Bun.spawnSync(['systemctl', 'is-active' , 'docker'])).stdout.toString().trim()
+        let isiPHP81Running = (await Bun.spawnSync(['systemctl', 'is-active' , 'php8.1-fpm'])).stdout.toString().trim()
+        let isiPHP83Running = (await Bun.spawnSync(['systemctl', 'is-active' , 'php8.3-fpm'])).stdout.toString().trim()
 
         return {
             status: true,
@@ -18,7 +20,9 @@ export const run = async (context: Context,prisma: PrismaClient) => {
                 nginx: isNginxRunning,
                 mongodb: isMongoDRunning,
                 mysql: isMysqlRunning,
-                php_8_1: isiPHP81Running
+                docker: isDockerRunning,
+                php_8_1: isiPHP81Running,
+                php_8_3: isiPHP83Running
             }
         }
     }else{
