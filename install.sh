@@ -43,6 +43,10 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
 
     ./scripts/install-local-nginx.sh
 
+    echo "Installing Mysql"
+
+    ./scripts/install-local-mysql.sh
+
     sudo cp ./src/templates/flix.service /etc/systemd/system
 
     sudo systemctl enable flix
