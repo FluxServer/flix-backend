@@ -41,11 +41,11 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
 
     echo "Installing Nginx"
 
-    ./scripts/install-local-nginx.sh
+    sudo ./scripts/install-local-nginx.sh
 
     echo "Installing Mysql"
 
-    ./scripts/install-local-mysql.sh
+    sudo ./scripts/install-local-mysql.sh
 
     sudo cp ./src/templates/flix.service /etc/systemd/system
 
