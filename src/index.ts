@@ -11,8 +11,6 @@ import { staticPlugin } from '@elysiajs/static'
 const app = new Elysia()
     .use(cors())
     .use(staticPlugin({
-        assets: "v1_panel",
-        prefix: "/v1_panel",
         maxAge: (process.env['DEBUG'] as unknown as number) == 1 ? 0 : 1200
     }))
 
@@ -46,8 +44,6 @@ async function forward(event: String, data: any) {
         })
     }
 }
-
-app.get("/v1_panel" , () => Bun.file("v1_panel/index.html"))
 app.ws('/wssocket', {
     async message(ws, message: any) {
         if (message.event == "login") {
