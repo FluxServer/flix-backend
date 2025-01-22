@@ -9,7 +9,7 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
     sudo ln -s "${HOME}/.bun/bin/bun" /usr/bin
     sudo ln -s "${HOME}/.bun/bin/bunx" /usr/bin
 
-    wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+    wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
 
     export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
     [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
@@ -56,8 +56,8 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
     echo "Installation Successfull of Flix."
 
 elif [[ "$OSTYPE" == "darwin"* ]]; then
-    curl -fsSL https://bun.sh/install | bash
-
+    #curl -fsSL https://bun.sh/install | bash
+    echo "Flix Installation is not supported through bash/sh on MacOS Yet"
 
 elif [[ "$OSTYPE" == "win32" ]]; then
     echo "Flix Installation is not supported through bash/sh on Windows Yet"
